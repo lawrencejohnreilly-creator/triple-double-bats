@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Triple Double Bats | Custom Bat Art</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;600;700&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --bg2: #111111;
+    --bg3: #1a1a1a;
+    --purple: #8B3DFF;
+    --purple2: #A865FF;
+    --white: #f4f0e8;
+    --gray: #888;
+    --border: rgba(139,61,255,0.2);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: 'Barlow', sans-serif;
+    overflow-x: hidden;
+  }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 48px;
+    background: linear-gradient(to bottom, rgba(10,10,10,0.98) 0%, transparent 100%);
+    backdrop-filter: blur(2px);
+    transition: padding 0.3s, background 0.3s;
+  }
+
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 4px;
+    color: var(--white);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--purple); }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    align-items: center;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--gray);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--white); }
+  .nav-cta {
+    background: var(--purple) !important;
+    color: var(--white) !important;
+    padding: 9px 22px;
+    font-weight: 700 !important;
+    transition: background 0.3s, transform 0.2s !important;
+    clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+  }
+  .nav-cta:hover { background: var(--purple2) !important; transform: translateY(-1px); }
+
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 140px 48px 100px;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 900px;
+    height: 900px;
+    background: radial-gradient(ellipse, rgba(139,61,255,0.12) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .hero-bg-text {
+    position: absolute;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(10rem, 22vw, 22rem);
+    color: rgba(139,61,255,0.04);
+    letter-spacing: 10px;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+    white-space: nowrap;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--purple);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    position: relative;
+    z-index: 2;
+    animation: fadeUp 0.8s ease both;
+  }
+  .hero-eyebrow::before, .hero-eyebrow::after {
+    content: '';
+    display: inline-block;
+    width: 40px;
+    height: 1px;
+    background: var(--purple);
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(5rem, 12vw, 13rem);
+    line-height: 0.88;
+    letter-spacing: 4px;
+    margin-bottom: 32px;
+    position: relative;
+    z-index: 2;
+    animation: fadeUp 0.8s 0.1s ease both;
+  }
+  .hero-title .highlight { color: var(--purple); display: block; }
+
+  .hero-desc {
+    font-size: 1.1rem;
+    font-weight: 300;
+    line-height: 1.75;
+    color: rgba(244,240,232,0.6);
+    max-width: 520px;
+    margin: 0 auto 48px;
+    position: relative;
+    z-index: 2;
+    animation: fadeUp 0.8s 0.2s ease both;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--purple);
+    color: var(--white);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 16px 36px;
+    text-decoration: none;
+    transition: all 0.25s;
+    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+  }
+  .btn-primary:hover {
+    background: var(--purple2);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(139,61,255,0.4);
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: transparent;
+    color: var(--white);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 15px 34px;
+    text-decoration: none;
+    border: 1px solid rgba(244,240,232,0.2);
+    transition: all 0.25s;
+    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+  }
+  .btn-secondary:hover { border-color: var(--purple); color: var(--purple); }
+
+  .marquee-bar {
+    overflow: hidden;
+    background: var(--purple);
+    padding: 14px 0;
+    white-space: nowrap;
+  }
+  .marquee-inner {
+    display: inline-flex;
+    animation: marquee 20s linear infinite;
+  }
+  .marquee-inner span {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 3px;
+    color: var(--white);
+    padding: 0 28px;
+  }
+  .marquee-inner .dot { color: rgba(255,255,255,0.3); padding: 0 4px; }
+
+  .section-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--purple);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-label::before {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 1px;
+    background: var(--purple);
+  }
+
+  .about {
+    padding: 100px 48px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 80px;
+    align-items: start;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 7rem;
+    color: rgba(139,61,255,0.08);
+    line-height: 1;
+    margin-top: 8px;
+    letter-spacing: 4px;
+  }
+
+  .about-content h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 4.5vw, 5rem);
+    letter-spacing: 2px;
+    line-height: 1;
+    margin-bottom: 28px;
+  }
+  .about-content h2 em { font-style: normal; color: var(--purple); }
+
+  .about-content p {
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.85;
+    color: rgba(244,240,232,0.65);
+    margin-bottom: 20px;
+    max-width: 620px;
+  }
+
+  .about-stats {
+    display: flex;
+    gap: 48px;
+    margin-top: 48px;
+    padding-top: 48px;
+    border-top: 1px solid var(--border);
+  }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.5rem;
+    color: var(--purple);
+    line-height: 1;
+  }
+  .stat-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-top: 4px;
+  }
+
+  .gallery-section {
+    padding: 80px 48px;
+    background: var(--bg2);
+  }
+  .gallery-header {
+    max-width: 1200px;
+    margin: 0 auto 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  .gallery-header h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 5vw, 5.5rem);
+    letter-spacing: 2px;
+    line-height: 1;
+  }
+  .gallery-header h2 span { color: var(--purple); }
+  .gallery-header p {
+    font-size: 0.9rem;
+    color: var(--gray);
+    max-width: 280px;
+    text-align: right;
+    line-height: 1.6;
+  }
+
+  .gallery-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 3px;
+  }
+
+  .gallery-item {
+    position: relative;
+    overflow: hidden;
+    background: var(--bg3);
+    cursor: pointer;
+    min-height: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .gallery-item:first-child { grid-row: 1 / 3; min-height: 500px; }
+
+  .gallery-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    padding: 32px;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    border: 1px dashed rgba(139,61,255,0.2);
+    transition: border-color 0.3s;
+  }
+  .gallery-item:hover .gallery-placeholder { border-color: rgba(139,61,255,0.5); }
+  .gallery-placeholder-icon { font-size: 2.5rem; opacity: 0.3; }
+  .gallery-placeholder-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gray);
+  }
+  .gallery-tag {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background: var(--purple);
+    color: var(--white);
+    font-weight: 700;
+    padding: 5px 12px;
+    margin-top: 8px;
+    clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
+  }
+
+  .gallery-cta-wrap {
+    max-width: 1200px;
+    margin: 40px auto 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  .process {
+    padding: 100px 48px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .process-header { text-align: center; margin-bottom: 72px; }
+  .process-header h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 5vw, 5.5rem);
+    letter-spacing: 2px;
+    margin-top: 12px;
+  }
+  .process-header h2 span { color: var(--purple); }
+
+  .process-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+  }
+  .process-step {
+    background: var(--bg2);
+    padding: 40px 32px;
+    position: relative;
+    border: 1px solid transparent;
+    transition: border-color 0.3s, background 0.3s;
+    clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
+  }
+  .process-step:hover { border-color: var(--border); background: var(--bg3); }
+  .step-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 4rem;
+    color: rgba(139,61,255,0.15);
+    line-height: 1;
+    margin-bottom: 24px;
+  }
+  .step-icon { position: absolute; top: 32px; right: 28px; font-size: 1.5rem; opacity: 0.4; }
+  .step-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    color: var(--white);
+  }
+  .step-desc {
+    font-size: 0.9rem;
+    font-weight: 300;
+    line-height: 1.7;
+    color: rgba(244,240,232,0.55);
+  }
+
+  .social-section {
+    padding: 100px 48px;
+    background: var(--bg2);
+    text-align: center;
+  }
+  .social-inner { max-width: 800px; margin: 0 auto; }
+  .social-inner h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.5rem, 6vw, 6.5rem);
+    letter-spacing: 3px;
+    line-height: 1;
+    margin-bottom: 20px;
+  }
+  .social-inner h2 .purple { color: var(--purple); }
+  .social-inner p {
+    font-size: 1rem;
+    font-weight: 300;
+    color: rgba(244,240,232,0.6);
+    line-height: 1.7;
+    margin-bottom: 56px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .social-cards { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+  .social-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    padding: 40px 52px;
+    text-decoration: none;
+    color: var(--white);
+    transition: all 0.3s;
+    min-width: 230px;
+    clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
+    position: relative;
+    overflow: hidden;
+  }
+  .social-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(139,61,255,0.1) 0%, transparent 100%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .social-card:hover::before { opacity: 1; }
+  .social-card:hover {
+    border-color: var(--purple);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 50px rgba(139,61,255,0.25);
+  }
+  .social-icon { font-size: 2.4rem; }
+  .social-platform {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gray);
+  }
+  .social-handle {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+  }
+  .social-follow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--purple);
+    font-weight: 700;
+  }
+
+  footer {
+    padding: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 4px;
+    color: var(--white);
+    text-decoration: none;
+  }
+  .footer-logo span { color: var(--purple); }
+  .footer-copy { font-size: 0.8rem; color: var(--gray); letter-spacing: 1px; font-weight: 300; }
+  .footer-socials { display: flex; gap: 20px; }
+  .footer-socials a {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gray);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .footer-socials a:hover { color: var(--purple); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .reveal {
+    opacity: 0;
+    transform: translateY(36px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  @media (max-width: 900px) {
+    nav { padding: 18px 24px; }
+    .nav-links { display: none; }
+    .hero { padding: 120px 24px 80px; }
+    .about { grid-template-columns: 1fr; padding: 60px 24px; gap: 32px; }
+    .section-num { display: none; }
+    .gallery-section { padding: 60px 24px; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; }
+    .gallery-item:first-child { grid-row: auto; min-height: 220px; }
+    .gallery-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+    .gallery-header p { text-align: left; }
+    .process { padding: 60px 24px; }
+    .process-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .social-section { padding: 60px 24px; }
+    .about-stats { gap: 28px; flex-wrap: wrap; }
+    footer { flex-direction: column; gap: 20px; text-align: center; padding: 36px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="navbar">
+  <a href="#" class="nav-logo">Triple <span>Double</span> Bats</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#connect" class="nav-cta">Connect</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg-text">TDB</div>
+  <div class="hero-eyebrow">Custom Bat Art</div>
+  <h1 class="hero-title">
+    Triple
+    <span class="highlight">Double</span>
+    Bats
+  </h1>
+  <p class="hero-desc">
+    Where craftsmanship meets culture. Each bat is a hand-painted original —
+    built from vision, finished with precision, and made to be remembered.
+  </p>
+  <div class="hero-actions">
+    <a href="#gallery" class="btn-primary">&#9654;&nbsp; View the Work</a>
+    <a href="#connect" class="btn-secondary">Get in Touch</a>
+  </div>
+</section>
+
+<div class="marquee-bar">
+  <div class="marquee-inner">
+    <span>Custom Bat Art</span><span class="dot">&#9670;</span>
+    <span>Hand Painted</span><span class="dot">&#9670;</span>
+    <span>One of a Kind</span><span class="dot">&#9670;</span>
+    <span>Triple Double Bats</span><span class="dot">&#9670;</span>
+    <span>Made to Order</span><span class="dot">&#9670;</span>
+    <span>Custom Bat Art</span><span class="dot">&#9670;</span>
+    <span>Hand Painted</span><span class="dot">&#9670;</span>
+    <span>One of a Kind</span><span class="dot">&#9670;</span>
+    <span>Triple Double Bats</span><span class="dot">&#9670;</span>
+    <span>Made to Order</span><span class="dot">&#9670;</span>
+  </div>
+</div>
+
+<section class="about" id="about">
+  <div>
+    <div class="section-label">About</div>
+    <div class="section-num">01</div>
+  </div>
+  <div class="about-content reveal">
+    <h2>Art That <em>Swings</em> Different</h2>
+    <p>
+      Triple Double Bats is the creative vision of Dewayne Walker — an artist who
+      transforms standard baseball bats into handcrafted works of art. Every bat
+      tells a story: team pride, fraternal identity, personal legacy.
+    </p>
+    <p>
+      From bold fraternity designs to custom portrait pieces and sports team tributes,
+      no two bats are alike. Each creation is painted by hand with meticulous detail,
+      built to be displayed, gifted, or carried with pride.
+    </p>
+    <div class="about-stats">
+      <div class="stat-item">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Hand Painted</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">1/1</div>
+        <div class="stat-label">Every Piece</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">&#8734;</div>
+        <div class="stat-label">Styles Available</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="gallery-section" id="gallery">
+  <div class="gallery-header reveal">
+    <div>
+      <div class="section-label">Gallery</div>
+      <h2>The <span>Work</span></h2>
+    </div>
+    <p>A growing catalog of custom pieces — each one unique, each one a statement.</p>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item reveal">
+      <div class="gallery-placeholder">
+        <div class="gallery-placeholder-icon">&#127981;</div>
+        <div class="gallery-placeholder-label">Featured Piece</div>
+        <div class="gallery-tag">Full Collection</div>
+      </div>
+    </div>
+    <div class="gallery-item reveal reveal-delay-1">
+      <div class="gallery-placeholder">
+        <div class="gallery-placeholder-icon">&#127981;</div>
+        <div class="gallery-placeholder-label">Coming Soon</div>
+        <div class="gallery-tag">Fraternity</div>
+      </div>
+    </div>
+    <div class="gallery-item reveal reveal-delay-2">
+      <div class="gallery-placeholder">
+        <div class="gallery-placeholder-icon">&#127981;</div>
+        <div class="gallery-placeholder-label">Coming Soon</div>
+        <div class="gallery-tag">Sports</div>
+      </div>
+    </div>
+    <div class="gallery-item reveal reveal-delay-3">
+      <div class="gallery-placeholder">
+        <div class="gallery-placeholder-icon">&#127981;</div>
+        <div class="gallery-placeholder-label">Coming Soon</div>
+        <div class="gallery-tag">Portrait</div>
+      </div>
+    </div>
+    <div class="gallery-item reveal reveal-delay-4">
+      <div class="gallery-placeholder">
+        <div class="gallery-placeholder-icon">&#127981;</div>
+        <div class="gallery-placeholder-label">Coming Soon</div>
+        <div class="gallery-tag">Custom</div>
+      </div>
+    </div>
+  </div>
+  <div class="gallery-cta-wrap reveal">
+    <a href="https://www.instagram.com/triple_double_bats" target="_blank" class="btn-primary">&#128247;&nbsp; See More on Instagram</a>
+  </div>
+</section>
+
+<section class="process" id="process">
+  <div class="process-header reveal">
+    <div class="section-label" style="justify-content:center;">How It Works</div>
+    <h2>From Idea to <span>Icon</span></h2>
+  </div>
+  <div class="process-grid">
+    <div class="process-step reveal">
+      <div class="step-icon">&#128172;</div>
+      <div class="step-number">01</div>
+      <div class="step-title">Reach Out</div>
+      <p class="step-desc">DM on Instagram or TikTok with your idea, theme, colors, or any reference images you have in mind.</p>
+    </div>
+    <div class="process-step reveal reveal-delay-1">
+      <div class="step-icon">&#127912;</div>
+      <div class="step-number">02</div>
+      <div class="step-title">Design</div>
+      <p class="step-desc">Dewayne works with you to develop the concept — layout, color palette, and all the details that make it yours.</p>
+    </div>
+    <div class="process-step reveal reveal-delay-2">
+      <div class="step-icon">&#9999;&#65039;</div>
+      <div class="step-number">03</div>
+      <div class="step-title">Paint</div>
+      <p class="step-desc">Every line, every detail, painted by hand. No shortcuts — just skill, patience, and passion on every inch.</p>
+    </div>
+    <div class="process-step reveal reveal-delay-3">
+      <div class="step-icon">&#127942;</div>
+      <div class="step-number">04</div>
+      <div class="step-title">Deliver</div>
+      <p class="step-desc">Your finished bat, ready to display, gift, or carry. A one-of-a-kind piece built specifically for you.</p>
+    </div>
+  </div>
+</section>
+
+<section class="social-section" id="connect">
+  <div class="social-inner">
+    <div class="section-label" style="justify-content:center;">Connect</div>
+    <h2 class="reveal">Follow the <span class="purple">Craft</span></h2>
+    <p class="reveal">Watch the process, see new drops, and commission your own piece — all on social media.</p>
+    <div class="social-cards">
+      <a href="https://www.tiktok.com/@triple_double_bats" target="_blank" class="social-card reveal">
+        <div class="social-icon">&#127381;</div>
+        <div class="social-platform">TikTok</div>
+        <div class="social-handle">@Triple_Double_Bats</div>
+        <div class="social-follow">Follow &#8594;</div>
+      </a>
+      <a href="https://www.instagram.com/triple_double_bats" target="_blank" class="social-card reveal reveal-delay-1">
+        <div class="social-icon">&#128247;</div>
+        <div class="social-platform">Instagram</div>
+        <div class="social-handle">@Triple_Double_Bats</div>
+        <div class="social-follow">Follow &#8594;</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <a href="#" class="footer-logo">Triple <span>Double</span> Bats</a>
+  <div class="footer-copy">&copy; 2025 Triple Double Bats &mdash; All Rights Reserved</div>
+  <div class="footer-socials">
+    <a href="https://www.tiktok.com/@triple_double_bats" target="_blank">TikTok</a>
+    <a href="https://www.instagram.com/triple_double_bats" target="_blank">Instagram</a>
+  </div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(r => observer.observe(r));
+
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 60) {
+      nav.style.background = 'rgba(10,10,10,0.97)';
+      nav.style.backdropFilter = 'blur(12px)';
+      nav.style.padding = '14px 48px';
+    } else {
+      nav.style.background = '';
+      nav.style.backdropFilter = '';
+      nav.style.padding = '';
+    }
+  });
+</script>
+</body>
+</html>
