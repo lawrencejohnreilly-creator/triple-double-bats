@@ -1,0 +1,6 @@
+{
+  "name": "triple-double-bats",
+  "scripts": {
+    "start": "npx serve . -p $PORT"
+  }
+}
